@@ -5,7 +5,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
   
   describe '#run' do
     it 'runs like a dummy' do
-      Fastlane::Actions::MergeJunitReportAction.run(:input_files => ['report1.xml', 'report2.xml'])
+      Fastlane::Actions::MergeJunitReportAction.run(:input_files => ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'])
     end
 
     it 'aborts if input files not given' do
@@ -13,6 +13,14 @@ describe Fastlane::Actions::MergeJunitReportAction do
 
       Fastlane::FastFile.new.parse("lane :merge do
         merge_junit_report(:input_files => [])  
+      end").runner.execute(:merge)
+    end
+
+    it 'aborts if input file does not exist' do
+      expect(Fastlane::Actions::MergeJunitReportAction.ui).to receive(:error).with('File not found: file1.xml')
+
+      Fastlane::FastFile.new.parse("lane :merge do
+        merge_junit_report(:input_files => ['file1.xml', 'file2.xml'])  
       end").runner.execute(:merge)
     end
   end

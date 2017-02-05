@@ -3,9 +3,18 @@ module Fastlane
     class MergeJunitReportAction < Action
       def self.run(params)
         input_files = params[:input_files]
+        
         if input_files.length < 1
-          ui.error("No input files!")
+          ui.error("No input files!") 
+          return
         end
+
+        input_files.each { |input_file|
+          if !File.file?(input_file)
+            ui.error("File not found: #{input_file}")
+            return
+          end
+        }
 
       end
 

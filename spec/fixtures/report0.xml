@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='FooUITests.xctest' tests='3' failures='1'>
+  <testsuite name='FooUITests.FooUITests' tests='3' failures='1'>
+    <testcase classname='FooUITests.FooUITests' name='test1' time='6.825'/>
+    <testcase classname='FooUITests.FooUITests' name='test2' time='7.679'/>
+    <testcase classname='FooUITests.FooUITests' name='test3'>
+      <failure message='XCTAssertTrue failed - '>FooUITests.swift:40</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
