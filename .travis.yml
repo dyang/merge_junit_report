@@ -1,0 +1,6 @@
+os:
+    - osx
+language: ruby
+rvm:
+    - 2.4
+cache: bundler
