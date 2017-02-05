@@ -2,7 +2,11 @@ module Fastlane
   module Actions
     class MergeJunitReportAction < Action
       def self.run(params)
-        UI.message("The merge_junit_report plugin is working!")
+        input_files = params[:input_files]
+        if input_files.length < 1
+          ui.error("No input files!")
+        end
+
       end
 
       def self.description
@@ -40,6 +44,15 @@ module Fastlane
         # [:ios, :mac, :android].include?(platform)
         true
       end
+
+      class << self
+        attr_accessor :ui
+      end
+
+      def self.ui
+        @ui ||= FastlaneCore::UI.new
+      end
+      
     end
   end
 end

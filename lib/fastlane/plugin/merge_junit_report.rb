@@ -1,3 +1,4 @@
+require 'fastlane_core'
 require 'fastlane/plugin/merge_junit_report/version'
 
 module Fastlane
