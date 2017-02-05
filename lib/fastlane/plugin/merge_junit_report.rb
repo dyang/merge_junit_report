@@ -1,5 +1,7 @@
 require 'fastlane_core'
 require 'fastlane/plugin/merge_junit_report/version'
+require 'fastlane/plugin/merge_junit_report/parser'
+require 'fastlane/plugin/merge_junit_report/report'
 
 module Fastlane
   module MergeJunitReport
