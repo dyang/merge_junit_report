@@ -1,6 +1,13 @@
 os:
     - osx
+
 language: ruby
+
 rvm:
     - 2.4.0
+
+default_install:
+    - gem update --system
+    - gem update bundler
+
 cache: bundler
