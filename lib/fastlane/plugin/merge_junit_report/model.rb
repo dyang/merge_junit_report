@@ -32,13 +32,17 @@ module Fastlane
 
 			class TestCase
 				attr_reader :xml_doc
-				attr_reader :classname
-				attr_reader :name
-
+				
 				def initialize(xml_doc)
 					@xml_doc = xml_doc
-					@classname = @xml_doc.attr('classname')
-					@name = @xml_doc.attr('name')
+				end
+
+				def name
+					@xml_doc.attr('name')
+				end
+
+				def classname
+					@xml_doc.attr('classname')
 				end
 
 				def failed?
