@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.author        = %q{Derek Yang}
   spec.email         = %q{yanghada@gmail.com}
 
-  spec.summary       = %q{A fastlane plugin that merges multiple junit reports into one}
+  spec.summary       = %q{Merges multiple junit reports into one}
   spec.homepage      = "https://github.com/dyang/merge_junit_report"
   spec.license       = "MIT"
 
