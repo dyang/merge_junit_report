@@ -1,17 +1,19 @@
 module Fastlane
   module Actions
     class MergeJunitReportAction < Action
+      UI = FastlaneCore::UI
+
       def self.run(params)
         input_files = params[:input_files]
         
         if input_files.length < 1
-          ui.error("No input files!") 
+          UI.error("No input files!") 
           return
         end
 
         input_files.each { |input_file|
           if !File.file?(input_file)
-            ui.error("File not found: #{input_file}")
+            UI.error("File not found: #{input_file}")
             return
           end
         }
@@ -25,7 +27,7 @@ module Fastlane
         FileUtils.mkdir_p(File.dirname(output_file))
         File.write(output_file, merged.to_xml)
 
-        ui.success("Reports merged to #{output_file} successfully")
+        UI.success("Reports merged to #{output_file} successfully")
       end
 
       def self.description
@@ -62,14 +64,6 @@ module Fastlane
         #
         # [:ios, :mac, :android].include?(platform)
         true
-      end
-
-      class << self
-        attr_accessor :ui
-      end
-
-      def self.ui
-        @ui ||= FastlaneCore::UI.new
       end
       
     end
