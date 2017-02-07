@@ -4,6 +4,10 @@ module Fastlane
       UI = FastlaneCore::UI
 
       def self.run(params)
+        FastlaneCore::PrintTable.print_values(
+          config: params,
+          title: 'Summary for merge_junit_report Action'
+        )
         input_files = params[:input_files]
 
         xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file))}
@@ -49,6 +53,15 @@ module Fastlane
                                   optional: true,
                                   default_value: "result.xml",
                                       type: String)
+        ]
+      end
+
+      def self.example_code
+        [
+          'merge_junit_report(
+            input_files: ["report1.xml", "report2.xml"],
+            output_file: "output/merged_report.xml"
+          )'
         ]
       end
 

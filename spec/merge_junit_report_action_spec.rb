@@ -10,7 +10,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
     it 'should abort if input files not given' do
       expect do
         Fastlane::FastFile.new.parse("lane :merge do
-          merge_junit_report(:input_files => [])  
+          merge_junit_report(input_files: [])  
         end").runner.execute(:merge)
       end.to raise_error 'No input files!'
     end
@@ -18,7 +18,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
     it 'should abort if input file does not exist' do
       expect do
         Fastlane::FastFile.new.parse("lane :merge do
-          merge_junit_report(:input_files => ['file1.xml', 'file2.xml'])  
+          merge_junit_report(input_files: ['file1.xml', 'file2.xml'])  
         end").runner.execute(:merge)
       end.to raise_error 'File not found: file1.xml'
     end
@@ -27,7 +27,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
       output_file = File.absolute_path(default_output)
       
       Fastlane::FastFile.new.parse("lane :merge do
-        merge_junit_report(:input_files => ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'])  
+        merge_junit_report(input_files: ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'])  
       end").runner.execute(:merge)
 
       expect(File.exists?(output_file)).to be true
@@ -38,7 +38,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
       File.delete(output_file) if File.exists?(output_file)
 
       Fastlane::FastFile.new.parse("lane :merge do
-        merge_junit_report(:input_files => ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'], :output_file => 'output/merged.xml')  
+        merge_junit_report(input_files: ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'], output_file: 'output/merged.xml')  
       end").runner.execute(:merge)
 
       expect(File.exists?(output_file)).to be true
