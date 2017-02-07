@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.author        = %q{Derek Yang}
   spec.email         = %q{yanghada@gmail.com}
 
-  spec.summary       = %q{Foo}
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-merge_junit_report"
+  spec.summary       = %q{A fastlane plugin that merges multiple junit reports into one}
+  spec.homepage      = "https://github.com/dyang/merge_junit_report"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
