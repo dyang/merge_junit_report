@@ -16,6 +16,15 @@ module Fastlane
           end
         }
 
+        xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file))}
+        merger = Fastlane::Plugin::MergeJunitReport::Merger.new(xml_docs)
+        merged = merger.merge
+
+        # write to output_file
+        output_file = File.absolute_path(params[:output_file])
+        File.write(output_file, merged.to_xml)
+
+        ui.success("Reports merged to #{output_file} successfully")
       end
 
       def self.description

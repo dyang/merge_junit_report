@@ -51,6 +51,9 @@ module Fastlane
 						node['failures'] = failures.to_s
 					end
 				end
+
+				private :recalculate_failures, :remove_or_update_failures
+				
 			end
 		end
 	end
