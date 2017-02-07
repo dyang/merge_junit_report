@@ -1,5 +1,6 @@
 # merge_junit_report plugin
 
+[![Gem](https://badge.fury.io/rb/fastlane-plugin-merge_junit_report.svg)](https://badge.fury.io/rb/fastlane-plugin-merge_junit_report)
 [![Build Status](https://travis-ci.org/dyang/merge_junit_report.svg?branch=master)](https://travis-ci.org/dyang/merge_junit_report)
 
 ## Getting Started
