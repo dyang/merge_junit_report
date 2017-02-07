@@ -27,9 +27,30 @@ module Fastlane
 						}
 					}
 				
+					recalculate_failures(baseline)
 					baseline
 				end
 
+				def recalculate_failures(baseline)
+					total_failures = 0
+					baseline.xpath('//testsuite').each { |suite|
+						failures = 0
+						suite.xpath('testcase').each { |testcase|
+							failures += 1 if testcase.xpath('failure').size > 0
+						}
+						remove_or_update_failures(failures, suite)
+						total_failures += failures
+					}
+					remove_or_update_failures(total_failures, baseline.at_xpath('/testsuites'))
+				end
+
+				def remove_or_update_failures(failures, node)
+					if failures == 0
+						node.remove_attribute('failures')
+					else
+						node['failures'] = failures.to_s
+					end
+				end
 			end
 		end
 	end
