@@ -5,18 +5,6 @@ module Fastlane
 
       def self.run(params)
         input_files = params[:input_files]
-        
-        if input_files.length < 1
-          UI.error("No input files!") 
-          return
-        end
-
-        input_files.each { |input_file|
-          if !File.file?(input_file)
-            UI.error("File not found: #{input_file}")
-            return
-          end
-        }
 
         xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file))}
         merger = Fastlane::Plugin::MergeJunitReport::Merger.new(xml_docs)
@@ -48,7 +36,13 @@ module Fastlane
                                   env_name: "MERGE_JUNIT_REPORT_INPUT_FILES",
                                description: "A list of junit report files to merge from",
                                   optional: false,
-                                      type: Array),
+                                      type: Array,
+                              verify_block: proc do |input_files|
+                                UI.user_error!("No input files!") if input_files.length < 1
+                                input_files.each { |input_file|
+                                  UI.user_error!("File not found: #{input_file}") if !File.file?(input_file)
+                                }
+                                end),
           FastlaneCore::ConfigItem.new(key: :output_file,
                                   env_name: "MERGE_JUNIT_REPORT_OUTPUT_FILE",
                                description: "The output file where all input files will be merged into",

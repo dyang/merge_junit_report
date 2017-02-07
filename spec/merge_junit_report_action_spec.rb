@@ -8,19 +8,19 @@ describe Fastlane::Actions::MergeJunitReportAction do
   
   describe '#run' do
     it 'should abort if input files not given' do
-      expect(FastlaneCore::UI).to receive(:error).with('No input files!')
-
-      Fastlane::FastFile.new.parse("lane :merge do
-        merge_junit_report(:input_files => [])  
-      end").runner.execute(:merge)
+      expect do
+        Fastlane::FastFile.new.parse("lane :merge do
+          merge_junit_report(:input_files => [])  
+        end").runner.execute(:merge)
+      end.to raise_error 'No input files!'
     end
 
     it 'should abort if input file does not exist' do
-      expect(FastlaneCore::UI).to receive(:error).with('File not found: file1.xml')
-
-      Fastlane::FastFile.new.parse("lane :merge do
-        merge_junit_report(:input_files => ['file1.xml', 'file2.xml'])  
-      end").runner.execute(:merge)
+      expect do
+        Fastlane::FastFile.new.parse("lane :merge do
+          merge_junit_report(:input_files => ['file1.xml', 'file2.xml'])  
+        end").runner.execute(:merge)
+      end.to raise_error 'File not found: file1.xml'
     end
 
     it 'should merge input files into default result' do
