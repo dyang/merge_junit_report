@@ -22,6 +22,7 @@ module Fastlane
 
         # write to output_file
         output_file = File.absolute_path(params[:output_file])
+        FileUtils.mkdir_p(File.dirname(output_file))
         File.write(output_file, merged.to_xml)
 
         ui.success("Reports merged to #{output_file} successfully")

@@ -23,7 +23,7 @@ describe Fastlane::Actions::MergeJunitReportAction do
       end").runner.execute(:merge)
     end
 
-    it 'should merge input files into default result', :focus => true do
+    it 'should merge input files into default result' do
       output_file = File.absolute_path(default_output)
       expect(Fastlane::Actions::MergeJunitReportAction.ui).to receive(:success).with("Reports merged to #{output_file} successfully")
 
@@ -31,8 +31,21 @@ describe Fastlane::Actions::MergeJunitReportAction do
         merge_junit_report(:input_files => ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'])  
       end").runner.execute(:merge)
 
-      expect(File.exists?(default_output)).to be true
+      expect(File.exists?(output_file)).to be true
     end
     
+    it 'should merge input files into designated output file' do
+      output_file = File.absolute_path('output/merged.xml')
+      File.delete(output_file) if File.exists?(output_file)
+
+      expect(Fastlane::Actions::MergeJunitReportAction.ui).to receive(:success).with("Reports merged to #{output_file} successfully")
+
+      Fastlane::FastFile.new.parse("lane :merge do
+        merge_junit_report(:input_files => ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'], :output_file => 'output/merged.xml')  
+      end").runner.execute(:merge)
+
+      expect(File.exists?(output_file)).to be true
+    end
+
   end
 end
