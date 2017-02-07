@@ -12,9 +12,7 @@ fastlane add_plugin merge_junit_report
 
 ## About merge_junit_report
 
-Foo
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
+Merges multiple Junit reports into one.
 
 ## Example
 
