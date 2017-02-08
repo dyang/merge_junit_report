@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'equivalent-xml'
 
 describe Fastlane::Plugin::MergeJunitReport::Merger do
 	report0 = "
@@ -59,6 +60,13 @@ describe Fastlane::Plugin::MergeJunitReport::Merger do
 			merged_report = merger.merge
 			suite = merged_report.xpath('//testsuite').first
 			expect(suite.attr('failures')).to be nil
+		end
+
+		it 'should yield the same report if just one report is given', :focus => true do
+			original = Nokogiri::XML(report0)
+			merger = Fastlane::Plugin::MergeJunitReport::Merger.new([original])
+			merged_report = merger.merge
+			expect(merged_report).to be_equivalent_to(original)
 		end
 	end
 end
