@@ -1,3 +1,37 @@
-lane :test do
-  merge_junit_report
+lane :test do |options|
+  base_derived_data_path = options[:derived_data_path]
+  base_output_directory = options[:output_directory]
+  test_reports = []
+
+  begin
+    retry_count ||= 0
+
+    # Put output and derived data of each run into its own directory
+    output_directory_for_this_run = "#{base_derived_data_path}/run#{retry_count}"
+	  options[:derived_data_path] = output_directory_for_this_run
+	  options[:output_directory] = output_directory_for_this_run
+
+    scan(options)
+
+    last_report_file_path = "#{options[:output_directory]}/#{options[:custom_report_file_name]}"
+    test_reports << last_report_file_path
+
+  rescue => e
+    UI.important("failure noted: #{e}")
+	
+    if (retry_count += 1) < 3
+      last_report_file_path = "#{options[:output_directory]}/#{options[:custom_report_file_name]}"
+      test_reports << last_report_file_path
+
+      setup_fragile_tests_for_rescan(
+        project_path: options[:project],
+        scheme: options[:scheme],
+		report_filepath: last_report_file_path
+      )
+
+      retry
+    end
+  end
+
+  merge_junit_report(:input_files => test_reports)
 end
