@@ -44,5 +44,15 @@ describe Fastlane::Actions::MergeJunitReportAction do
       expect(File.exists?(output_file)).to be true
     end
 
+    it 'should not insert xml declaration when saving to output file', :focus => true do
+      Fastlane::FastFile.new.parse("lane :merge do
+        merge_junit_report(input_files: ['spec/fixtures/report0.xml', 'spec/fixtures/report1.xml'])  
+      end").runner.execute(:merge)
+
+      File.open(default_output) { |f| 
+        expect(f.readline).not_to eql('<?xml version="1.0"?>\n')
+      }
+      
+    end
   end
 end
