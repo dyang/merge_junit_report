@@ -20,7 +20,7 @@ module Fastlane
 									name = case_to_merge.attr('name')
 									baseline_case = baseline_suite.at_xpath("testcase[@name='#{name}' and @classname='#{classname}']")
 									if baseline_case
-										baseline_case.swap(case_to_merge.to_s)
+										baseline_case.swap(case_to_merge.to_xml)
 									end
 								}
 							end
