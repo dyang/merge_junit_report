@@ -5,7 +5,7 @@ module Fastlane
       # as `Helper::MergeJunitReportHelper.your_method`
       #
       def self.show_message
-        UI.message("Hello from the merge_junit_report plugin helper!")
+        UI.message('Hello from the merge_junit_report plugin helper!')
       end
     end
   end

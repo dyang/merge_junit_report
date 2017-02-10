@@ -1,6 +1,5 @@
 lane :test do |options|
   base_derived_data_path = options[:derived_data_path]
-  base_output_directory = options[:output_directory]
   test_reports = []
 
   begin
@@ -12,10 +11,10 @@ lane :test do |options|
     options[:output_directory] = output_directory_for_this_run
 
     scan(options)
-    
+
     last_report_file_path = "#{options[:output_directory]}/#{options[:custom_report_file_name]}"
     test_reports << last_report_file_path
-    merge_junit_report(:input_files => test_reports)
+    merge_junit_report(input_files: test_reports)
 
   rescue => e
     UI.important("failure noted: #{e}")
@@ -31,13 +30,12 @@ lane :test do |options|
       )
       retry
     end
-    
-    merge_junit_report(:input_files => test_reports)
+
+    merge_junit_report(input_files: test_reports)
     raise e
   end
-
 end
 
-lane :merge do |options|
-	merge_junit_report(:input_files => ['build/run0/report.xml', 'build/run1/report.xml', 'build/run2/report.xml'])
+lane :merge do
+  merge_junit_report(input_files: ['build/run0/report.xml', 'build/run1/report.xml', 'build/run2/report.xml'])
 end

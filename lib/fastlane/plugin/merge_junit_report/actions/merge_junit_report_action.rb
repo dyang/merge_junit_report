@@ -10,7 +10,7 @@ module Fastlane
         )
         input_files = params[:input_files]
 
-        xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file))}
+        xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file)) }
         merger = Fastlane::Plugin::MergeJunitReport::Merger.new(xml_docs)
         merged = merger.merge
 
@@ -23,11 +23,11 @@ module Fastlane
       end
 
       def self.description
-        "Provides the ability to merge multiple junit reports into one"
+        'Provides the ability to merge multiple junit reports into one'
       end
 
       def self.authors
-        ["Derek Yang"]
+        ['Derek Yang']
       end
 
       def self.return_value
@@ -37,22 +37,22 @@ module Fastlane
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :input_files,
-                                  env_name: "MERGE_JUNIT_REPORT_INPUT_FILES",
-                               description: "A list of junit report files to merge from",
-                                  optional: false,
-                                      type: Array,
-                              verify_block: proc do |input_files|
-                                UI.user_error!("No input files!") if input_files.length < 1
-                                input_files.each { |input_file|
-                                  UI.user_error!("File not found: #{input_file}") if !File.file?(input_file)
-                                }
-                                end),
+                                       env_name: 'MERGE_JUNIT_REPORT_INPUT_FILES',
+                                       description: 'A list of junit report files to merge from',
+                                       optional: false,
+                                       type: Array,
+                                       verify_block: proc do |input_files|
+                                                       UI.user_error!('No input files!') if input_files.empty?
+                                                       input_files.each do |input_file|
+                                                         UI.user_error!("File not found: #{input_file}") unless File.file?(input_file)
+                                                       end
+                                                     end),
           FastlaneCore::ConfigItem.new(key: :output_file,
-                                  env_name: "MERGE_JUNIT_REPORT_OUTPUT_FILE",
-                               description: "The output file where all input files will be merged into",
-                                  optional: true,
-                                  default_value: "result.xml",
-                                      type: String)
+                                       env_name: 'MERGE_JUNIT_REPORT_OUTPUT_FILE',
+                                       description: 'The output file where all input files will be merged into',
+                                       optional: true,
+                                       default_value: 'result.xml',
+                                       type: String)
         ]
       end
 
@@ -65,14 +65,9 @@ module Fastlane
         ]
       end
 
-      def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-        #
-        # [:ios, :mac, :android].include?(platform)
+      def self.is_supported?(_platform)
         true
       end
-      
     end
   end
 end
