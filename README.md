@@ -13,13 +13,11 @@ fastlane add_plugin merge_junit_report
 
 ## About merge_junit_report
 
-Merges multiple Junit reports into one.
+Merge_junit_report is a [Fastlane](https://fastlane.tools/) plugin that merges multiple junit reports into one single report. It's primarily designed to be used in conjunction with another Fastlane plugin [fastlane-plugin-setup_fragile_tests_for_rescan](https://github.com/lyndsey-ferguson/fastlane_plugins/tree/master/fastlane-plugin-setup_fragile_tests_for_rescan) so that one can rerun flaky tests on CI server and aggregate the results. 
 
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
-
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
 
 ## Run tests for this plugin
 
@@ -27,11 +25,6 @@ To run both the tests, and code style validation, run
 
 ```
 rake
-```
-
-To automatically fix many of the styling issues, use
-```
-rubocop -a
 ```
 
 ## Issues and Feedback
