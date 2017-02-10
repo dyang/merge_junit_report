@@ -1,11 +1,17 @@
 module Fastlane
   module Plugin
     module MergeJunitReport
+      # Merge several junit reports into one single report
       class Merger
+        # Initializes an instance of Merger
+        # @param [Array<Nokogiri::XML::Document>] junit reports the junit reports to merge from
+        # @return [Merger]
         def initialize(reports)
           @reports = reports
         end
 
+        # Merges reports passed in via constructor
+        # @return [Nokogiri::XML::Document] merged junit report
         def merge
           baseline = @reports.first
 
