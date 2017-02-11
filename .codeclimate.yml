@@ -1,12 +1,6 @@
 engines:
   rubocop:
     enabled: true
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - ruby:
-      	  mass_threshold: 30
 ratings:
   paths:
   - lib/**
