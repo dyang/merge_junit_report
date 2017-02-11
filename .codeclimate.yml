@@ -9,7 +9,5 @@ ratings:
   - "lib/**"
 
 exclude_paths:
-- config/
-- script/
-- spec/
-- vendor/
+- "spec/"
+- "vendor/"
