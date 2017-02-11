@@ -1,0 +1,15 @@
+engines:
+  fixme:
+    enabled: false
+  rubocop:
+    enabled: true
+
+ratings:
+  paths:
+  - "lib/**"
+
+exclude_paths:
+- config/
+- script/
+- spec/
+- vendor/
