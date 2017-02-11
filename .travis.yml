@@ -6,3 +6,8 @@ rvm:
 before_install:
     - gem update --system
     - gem update bundler
+
+addons:
+  code_climate:
+    repo_token:
+      secure: NVy4/+Y0cbQBYJIDHcIGe5l2YFWRR6qvb9cYnOG/z/B1WKeUQ0D6k+i7U61ur/8BHf8gvJfn736NGV/IDd8uHv9xL/maVca1bonntu+WmZtPM6+WDK7rFl23u7LROxK9zlykjdOE3XwmL/70tT+RXL0tHCDssKclbeMnN038t0Y5esFzfWk/zsYrp589EGdNk41ofrgLQrNmFsVPpYaqT1+J9wM+5sRWrIkrWJb0kOFvdcbnP63N9t0OWS++uhPgwIuM2KX3W5bWlXNONrL1WGzAW/gg+XFjRzd2lgQHqeewjVPKenDspe3wrApzl/2hFVdgmQIDpeeYy9kLPqdFVTCAVm1b0HwrHObKFOV2OOCuVHfoEW2Qpl0SXrE3XDvtU/txKmeqjyERXqWJQb9OKXHzwfeofLV7d6QsOMyMlXNscdo/wHpck3nTkhttgBgrEkGv+Br9XLlbXvjC+S0ZK0pEnab0pdEZCUJEM2dnqjFoCZ+W8TpuzD4cLhYN5TppF3aqQxA+tFME0lnULdHqgqRhpUVNvdoe7ugcsQw2HyyFng1AP3z5J34eQ4ppml0RmotR771gWqwXlBnvOPuUCSpHT2AUwFdRS8Yfj1L0jQY0o5VulXTBlPk5oU+8LKLCv1TtUsgD6ie3IQdHoAXDI8ZSurAGHZDtIguu0mhxlGc=

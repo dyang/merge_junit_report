@@ -30,4 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'fastlane', '>= 2.14.2'
   spec.add_development_dependency 'equivalent-xml'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
 end

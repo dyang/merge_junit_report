@@ -6,5 +6,8 @@ end
 
 require 'fastlane' # to import the Action super class
 require 'fastlane/plugin/merge_junit_report' # import the actual plugin
+require 'codeclimate-test-reporter'
+require 'simplecov'
 
+SimpleCov.start
 Fastlane.load_actions # load other actions (in case your plugin calls other actions or shared values)
