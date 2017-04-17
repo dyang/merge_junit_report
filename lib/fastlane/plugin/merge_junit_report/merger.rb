@@ -4,28 +4,31 @@ module Fastlane
       # Merge several junit reports into one single report
       class Merger
         # Initializes an instance of Merger
-        # @param [Array<Nokogiri::XML::Document>] junit reports the junit reports to merge from
+        # @param [Array<REXML::Document>] junit reports the junit reports to merge from
         # @return [Merger]
         def initialize(reports)
           @reports = reports
         end
 
         # Merges reports passed in via constructor
-        # @return [Nokogiri::XML::Document] merged junit report
+        # @return [REXML::Document] merged junit report
         def merge
           baseline = @reports.first
-
           @reports.drop(1).each do |report|
-            report.xpath('//testsuite').each do |suite_to_merge|
-              suite_name = suite_to_merge.attr('name')
-              baseline_suite = baseline.xpath("//testsuite[@name='#{suite_name}']")
+            report.elements.each('//testsuite') do |suite_to_merge|
+              suite_name = suite_to_merge.attributes['name']
+              baseline_suite = REXML::XPath.first(baseline, "//testsuite[@name='#{suite_name}']")
 
               next unless baseline_suite
-              suite_to_merge.xpath('testcase').each do |case_to_merge|
-                classname = case_to_merge.attr('classname')
-                name = case_to_merge.attr('name')
-                baseline_case = baseline_suite.at_xpath("testcase[@name='#{name}' and @classname='#{classname}']")
-                baseline_case.swap(case_to_merge.to_xml) if baseline_case
+              suite_to_merge.elements.each('testcase') do |case_to_merge|
+                classname = case_to_merge.attributes['classname']
+                name = case_to_merge.attributes['name']
+                baseline_case = REXML::XPath.first(baseline_suite, "testcase[@name='#{name}' and @classname='#{classname}']")
+                # Replace baseline_case with case_to_merge
+                if baseline_case
+                  baseline_case.parent.insert_after(baseline_case, case_to_merge)
+                  baseline_case.parent.delete_element(baseline_case)
+                end
               end
             end
           end
@@ -36,20 +39,20 @@ module Fastlane
 
         def recalculate_failures(baseline)
           total_failures = 0
-          baseline.xpath('//testsuite').each do |suite|
+          baseline.elements.each('//testsuite') do |suite|
             failures = 0
-            suite.xpath('testcase').each { |testcase| failures += 1 unless testcase.xpath('failure').empty? }
+            suite.elements.each('testcase') { |testcase| failures += 1 unless REXML::XPath.match(testcase, 'failure').empty? }
             remove_or_update_failures(failures, suite)
             total_failures += failures
           end
-          remove_or_update_failures(total_failures, baseline.at_xpath('/testsuites'))
+          remove_or_update_failures(total_failures, REXML::XPath.first(baseline, '/testsuites'))
         end
 
         def remove_or_update_failures(failures, node)
           if failures.zero?
-            node.remove_attribute('failures')
+            node.delete_attribute('failures')
           else
-            node['failures'] = failures.to_s
+            node.attributes['failures'] = failures.to_s
           end
         end
 

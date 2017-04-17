@@ -1,7 +1,7 @@
 require 'fastlane_core'
 require 'fastlane/plugin/merge_junit_report/version'
 require 'fastlane/plugin/merge_junit_report/merger'
-require 'nokogiri'
+require 'rexml/document'
 
 module Fastlane
   module MergeJunitReport

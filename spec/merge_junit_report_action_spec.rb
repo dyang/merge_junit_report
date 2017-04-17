@@ -41,12 +41,15 @@ describe Fastlane::Actions::MergeJunitReportAction do
       expect(File.exist?(output_file)).to be true
     end
 
-    it 'should not insert xml declaration when saving to output file' do
+    it 'should not duplicate xml declaration when saving to output file (nokogiri config test)' do
       Fastlane::FastFile.new.parse("lane :merge do
         merge_junit_report(input_files: ['../spec/fixtures/report0.xml', '../spec/fixtures/report1.xml'])
       end").runner.execute(:merge)
 
-      File.open(default_output) { |f| expect(f.readline).not_to eql('<?xml version="1.0"?>\n') }
+      File.open(default_output) do |file|
+        file.readline
+        expect(file.readline).not_to eql('<?xml version="1.0"?>\n')
+      end
     end
   end
 end

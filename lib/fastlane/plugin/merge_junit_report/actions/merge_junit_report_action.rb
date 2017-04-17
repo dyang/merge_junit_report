@@ -10,15 +10,14 @@ module Fastlane
         )
         input_files = params[:input_files]
 
-        xml_docs = input_files.map { |file| Nokogiri::XML(File.open(file)) }
+        xml_docs = input_files.map { |file| REXML::Document.new(File.new(file)) }
         merger = Fastlane::Plugin::MergeJunitReport::Merger.new(xml_docs)
         merged = merger.merge
 
         # write to output_file
         output_file = File.absolute_path(params[:output_file])
         FileUtils.mkdir_p(File.dirname(output_file))
-        File.write(output_file, merged.to_xml)
-
+        File.open(output_file, 'w') { |f| merged.write(f, 2) }
         UI.success("Reports merged to #{output_file} successfully")
       end
 
@@ -28,10 +27,6 @@ module Fastlane
 
       def self.authors
         ['Derek Yang']
-      end
-
-      def self.return_value
-        # If your method provides a return value, you can describe here what it does
       end
 
       def self.available_options
